@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++17   CMakeFiles/untitled1.dir/main.cpp.o CMakeFiles/untitled1.dir/Server.cpp.o CMakeFiles/untitled1.dir/Client.cpp.o  -o ../bin/untitled1 
