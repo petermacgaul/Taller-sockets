@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <thread>
 
 
 void Server::initServer(char *argv) {
@@ -70,6 +71,14 @@ void Server::initServer(char *argv) {
     */
 
     initializeData(&client_view);
+    clientes_esperados = 2;
+
+    clientes_activos = 0;
+
+    if (listen(serverSocket , clientes_esperados) < 0)
+    {
+        perror("Listen failed. Error");
+    }
 }
 
 int Server::sendData(struct View* client_view){
@@ -139,15 +148,8 @@ int Server::receiveData(struct Command* client_command){
 }
 
 void Server::acceptClient(){
-    int clientes_esperados = 1;
-    struct sockaddr_in client_addr;
 
-    clientes_activos = 0;
-
-    if (listen(serverSocket , clientes_esperados) < 0)
-    {
-        perror("Listen failed. Error");
-    }
+    sockaddr_in client_addr;
 
     /*
      Accept incoming connection from a client
@@ -172,15 +174,22 @@ void Server::acceptClient(){
         connections.push_back(cliente);
         clientes_activos++;
     }*/
-    client.clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &client.clientAddrlen);
+    while(clientes_activos < clientes_esperados){
 
-    if (client.clientSocket < 0)
-    {
-        perror("Accept failed");
+        client.clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &client.clientAddrlen);
+        
+        if (client.clientSocket < 0)
+        {
+            perror("Accept failed");
+        }
+        printf("Connection accepted\n\n");
+
+        client.isConnected = true;
+
+        thread second( &Server::chatWhitClients, this );
+        second.join();
     }
-    printf("Connection accepted\n\n");
 
-    client.isConnected = true;
 }
 
 void Server::processData(SDL_Event event, struct View* view) {
@@ -207,7 +216,7 @@ bool Server::playersAreConnected() {
 }
 
 void Server::chatWhitClients() {
-
+    printf("chatting with Client. \n");
     /* ToDo: Validar credenciales */
 
     while ( playersAreConnected() ) {

@@ -2,6 +2,7 @@
 
 #include <pthread.h>
 #include <thread>
+#include <zconf.h>
 
 #include "Server.h"
 #include "Client.h"
@@ -10,15 +11,15 @@ int main( int argc, char* argv[] ) {
     Server server;
     Client cliente;
 
-    pthread_t hiloUno ;
-    pthread_t hiloDos ;
+//    pthread_t hiloUno ;
+//    pthread_t hiloDos ;
 
     if( strcmp(argv[1],"SERVER") == 0 ){
         server.initServer(argv[2]);
 
-        server.acceptClient();
+        thread first ( &Server::acceptClient, server );
 
-        server.chatWhitClients();
+        first.join();
 
     }
 

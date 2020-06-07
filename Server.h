@@ -21,6 +21,8 @@ class Server {
     client_info client;
 
     int clientes_activos; //Todo: Cambiar este field a Len de connections
+    int clientes_esperados;
+
     vector<client_info> connections;
 
     struct Command client_command;
@@ -40,6 +42,7 @@ class Server {
 
     int enviarInformacionAClientes();
 
+
 public:
     void initServer(char *argv);
 
@@ -48,6 +51,7 @@ public:
     void chatWhitClients();
 
     void closeServer();
+
 };
 
 

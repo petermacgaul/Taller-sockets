@@ -6,20 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/peter/CLionProjects/untitled1/Client.cpp
-stdio.h
--
-stdlib.h
--
-sys/socket.h
--
-arpa/inet.h
--
-unistd.h
--
-Client.h
-/home/peter/CLionProjects/untitled1/Client.h
-
 /home/peter/CLionProjects/untitled1/Client.h
 CommunicateData.h
 /home/peter/CLionProjects/untitled1/CommunicateData.h
@@ -41,6 +27,8 @@ arpa/inet.h
 -
 unistd.h
 -
+thread
+-
 
 /home/peter/CLionProjects/untitled1/Server.h
 netinet/in.h
@@ -56,6 +44,8 @@ SDL2/SDL.h
 pthread.h
 -
 thread
+-
+zconf.h
 -
 Server.h
 /home/peter/CLionProjects/untitled1/Server.h
