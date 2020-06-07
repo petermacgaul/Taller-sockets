@@ -1,7 +1,3 @@
-//
-// Created by peter on 28/5/20.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -9,58 +5,61 @@
 #include <unistd.h>
 #include "Client.h"
 
-void Client::connectToServer()
-{
+void Client::connectToServer(char *ip, char *puerto) {
 
-    printf("Arguments: 1) ip: %s ,2) port: %s \n",ip_conect, puerto);
+    printf("Arguments: 1) ip: %s ,2) port: %s \n", ip, puerto);
 
-    // Create Socket
-    // int socket(int domain, int type, int protocol);
-    // Domain: AF_INET (IPv4 Internet protocols)
-    // Type: SOCK_STREAM (Provides  sequenced,  reliable, two-way connection-based byte streams.)
-    // Protocol: 0 (chosen automatically)
-    client_socket = socket(AF_INET , SOCK_STREAM , 0);
-    if (client_socket == -1)
-    {
+    /*
+     Create Socket
+     int socket(int domain, int type, int protocol);
+     Domain: AF_INET (IPv4 Internet protocols)
+     Type: SOCK_STREAM (Provides  sequenced,  reliable, two-way connection-based byte streams.)
+     Protocol: 0 (chosen automatically)
+    */
+    client_socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (client_socket == -1) {
         perror("Could not create socket");
     }
     printf("Socket created\n");
     //------------------------
 
     // Prepare the sockaddr_in structure
-    server.sin_addr.s_addr = inet_addr((const char*)ip_conect);
+    server.sin_addr.s_addr = inet_addr((const char *) ip);
     server.sin_family = AF_INET;
-    server.sin_port = htons( atoi(puerto) );
+    server.sin_port = htons(atoi(puerto));
     //------------------------
 
-    //Connect to remote server
-    // int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
-    // sockfd -> file descriptor that refers to a socket
-    // addr -> pointer to sockaddr_in structure for the SERVER.
-    // addrlen -> size of sockaddr_in structure for the SERVER.
-    // The connect() system call connects the socket referred to by the file descriptor sockfd to the address specified by addr.
-    if (connect(client_socket , (struct sockaddr *)&server , sizeof(struct sockaddr_in)) < 0)
-    {
+    /*
+     Connect to remote server
+     int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+     sockfd -> file descriptor that refers to a socket
+     addr -> pointer to sockaddr_in structure for the SERVER.
+     addrlen -> size of sockaddr_in structure for the SERVER.
+     The connect() system call connects the socket referred to by the file descriptor sockfd to the address specified by addr.
+     */
+
+    if (connect(client_socket, (struct sockaddr *) &server, sizeof(struct sockaddr_in)) < 0) {
         perror("connect failed. Error");
     }
     printf("Connected\n\n");
     //------------------------
 
     isConnected = true;
+}
+void Client::chatToServer(){
 
     // data to send
     SDL_Init (SDL_INIT_VIDEO);
 
-    SDL_Event sdlevent;
-    sdlevent.type = SDL_KEYDOWN;
-    sdlevent.key.keysym.sym = SDLK_ESCAPE;
-    SDL_PushEvent(&sdlevent);
+    SDL_Event event;
+    event.type = SDL_KEYDOWN;
+    event.key.keysym.sym = SDLK_UP;
+    SDL_PushEvent(&event);
 
     //keep communicating with server
     while(isConnected)
     {
         // Set data to send
-        SDL_Event event ;
 
         while ( SDL_PollEvent( &event ) ){
             client_command.command_event = event;
@@ -131,13 +130,4 @@ void Client::closeClient() {
     close(client_socket);
     printf("Socket number %d closed\n", client_socket);
 }
-
-void Client::setPort(char *string) {
-
-}
-
-void Client::setIP(char *string) {
-
-}
-
 

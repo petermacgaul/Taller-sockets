@@ -88,6 +88,15 @@
 		<Unit filename="/home/peter/CLionProjects/untitled1/Client.h">
 			<Option target="untitled1"/>
 		</Unit>
+		<Unit filename="/home/peter/CLionProjects/untitled1/ColaMultiHilo.cpp">
+			<Option target="untitled1"/>
+		</Unit>
+		<Unit filename="/home/peter/CLionProjects/untitled1/ColaMultiHilo.h">
+			<Option target="untitled1"/>
+		</Unit>
+		<Unit filename="/home/peter/CLionProjects/untitled1/CommunicateData.h">
+			<Option target="untitled1"/>
+		</Unit>
 		<Unit filename="/home/peter/CLionProjects/untitled1/Server.cpp">
 			<Option target="untitled1"/>
 		</Unit>
@@ -95,9 +104,6 @@
 			<Option target="untitled1"/>
 		</Unit>
 		<Unit filename="/home/peter/CLionProjects/untitled1/main.cpp">
-			<Option target="untitled1"/>
-		</Unit>
-		<Unit filename="/home/peter/CLionProjects/untitled1/struct.h">
 			<Option target="untitled1"/>
 		</Unit>
 		<Unit filename="/home/peter/CLionProjects/untitled1/CMakeLists.txt">

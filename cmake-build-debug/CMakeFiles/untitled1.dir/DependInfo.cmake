@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/peter/CLionProjects/untitled1/Client.cpp" "/home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/Client.cpp.o"
+  "/home/peter/CLionProjects/untitled1/ColaMultiHilo.cpp" "/home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o"
   "/home/peter/CLionProjects/untitled1/Server.cpp" "/home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/Server.cpp.o"
   "/home/peter/CLionProjects/untitled1/main.cpp" "/home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir/main.cpp.o"
   )

@@ -12,9 +12,11 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 set(SOURCE_FILES
-        main.cpp Server.cpp Server.h Client.cpp Client.h
+        main.cpp
+        Server.cpp Server.h
+        Client.cpp Client.h
 
-        struct.h)
+        CommunicateData.h ColaMultiHilo.cpp ColaMultiHilo.h)
 
 
 add_executable(untitled1 ${SOURCE_FILES})

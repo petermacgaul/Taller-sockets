@@ -1,13 +1,12 @@
-//
-// Created by peter on 28/5/20.
-//
-
 #ifndef TALLER_SERVER_H
 #define TALLER_SERVER_H
-#include <SDL2/SDL.h>
-#include <netinet/in.h>
-#include "struct.h"
 
+#include <netinet/in.h>
+#include <vector>
+
+#include "CommunicateData.h"
+
+using namespace std;
 
 typedef struct Cliente {
     bool isConnected;
@@ -16,22 +15,18 @@ typedef struct Cliente {
 } client_info;
 
 class Server {
-
-    void initializeData(struct View* client_view);
-
     int serverSocket;
+    //ToDo: 2 Threads del server, 1 para enviar data, otro para aceptar clientes
+
     client_info client;
 
-    struct sockaddr_in client_addr;
+    int clientes_activos; //Todo: Cambiar este field a Len de connections
+    vector<client_info> connections;
+
     struct Command client_command;
     struct View client_view;
 
-public:
-    void acceptClient();
-
-    void initServer(char *argv);
-
-    void closeServer();
+    void initializeData(struct View* client_view);
 
     bool playersAreConnected();
 
@@ -41,7 +36,18 @@ public:
 
     int sendData(struct View* client_view);
 
-    void start();
+    void desencolar();
+
+    int enviarInformacionAClientes();
+
+public:
+    void initServer(char *argv);
+
+    void acceptClient();
+
+    void chatWhitClients();
+
+    void closeServer();
 };
 
 

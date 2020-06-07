@@ -3,14 +3,17 @@
 
 CMakeFiles/untitled1.dir/Client.cpp.o: ../Client.cpp
 CMakeFiles/untitled1.dir/Client.cpp.o: ../Client.h
-CMakeFiles/untitled1.dir/Client.cpp.o: ../struct.h
+CMakeFiles/untitled1.dir/Client.cpp.o: ../CommunicateData.h
 
+CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o: ../ColaMultiHilo.cpp
+CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o: ../ColaMultiHilo.h
+
+CMakeFiles/untitled1.dir/Server.cpp.o: ../CommunicateData.h
 CMakeFiles/untitled1.dir/Server.cpp.o: ../Server.cpp
 CMakeFiles/untitled1.dir/Server.cpp.o: ../Server.h
-CMakeFiles/untitled1.dir/Server.cpp.o: ../struct.h
 
 CMakeFiles/untitled1.dir/main.cpp.o: ../Client.h
+CMakeFiles/untitled1.dir/main.cpp.o: ../CommunicateData.h
 CMakeFiles/untitled1.dir/main.cpp.o: ../Server.h
 CMakeFiles/untitled1.dir/main.cpp.o: ../main.cpp
-CMakeFiles/untitled1.dir/main.cpp.o: ../struct.h
 

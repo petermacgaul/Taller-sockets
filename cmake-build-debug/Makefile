@@ -39,10 +39,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/112/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/114/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/112/bin/cmake/linux/bin/cmake -E remove -f
+RM = /snap/clion/114/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/peter/CLionProjects/untitled1/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/snap/clion/112/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/114/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/112/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/114/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -150,6 +150,33 @@ Client.cpp.s:
 	$(MAKE) -f CMakeFiles/untitled1.dir/build.make CMakeFiles/untitled1.dir/Client.cpp.s
 .PHONY : Client.cpp.s
 
+ColaMultiHilo.o: ColaMultiHilo.cpp.o
+
+.PHONY : ColaMultiHilo.o
+
+# target to build an object file
+ColaMultiHilo.cpp.o:
+	$(MAKE) -f CMakeFiles/untitled1.dir/build.make CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o
+.PHONY : ColaMultiHilo.cpp.o
+
+ColaMultiHilo.i: ColaMultiHilo.cpp.i
+
+.PHONY : ColaMultiHilo.i
+
+# target to preprocess a source file
+ColaMultiHilo.cpp.i:
+	$(MAKE) -f CMakeFiles/untitled1.dir/build.make CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.i
+.PHONY : ColaMultiHilo.cpp.i
+
+ColaMultiHilo.s: ColaMultiHilo.cpp.s
+
+.PHONY : ColaMultiHilo.s
+
+# target to generate assembly for a file
+ColaMultiHilo.cpp.s:
+	$(MAKE) -f CMakeFiles/untitled1.dir/build.make CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.s
+.PHONY : ColaMultiHilo.cpp.s
+
 Server.o: Server.cpp.o
 
 .PHONY : Server.o
@@ -216,6 +243,9 @@ help:
 	@echo "... Client.o"
 	@echo "... Client.i"
 	@echo "... Client.s"
+	@echo "... ColaMultiHilo.o"
+	@echo "... ColaMultiHilo.i"
+	@echo "... ColaMultiHilo.s"
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"
