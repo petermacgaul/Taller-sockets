@@ -17,9 +17,13 @@ int main( int argc, char* argv[] ) {
     if( strcmp(argv[1],"SERVER") == 0 ){
         server.initServer(argv[2]);
 
-        thread first ( &Server::acceptClient, server );
+        thread client_acceptor ( &Server::acceptClient, server );
+        client_acceptor.join();
 
-        first.join();
+        thread client_chatter ( &Server::chatWhitClients, server );
+        client_chatter.join();
+
+        server.closeServer();
 
     }
 
@@ -30,9 +34,10 @@ int main( int argc, char* argv[] ) {
 
         cliente.chatToServer();
 
+        cliente.closeClient();
+
     }
-    server.closeServer();
-    cliente.closeClient();
+
     return 0;
 
 }

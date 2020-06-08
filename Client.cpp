@@ -21,7 +21,6 @@ void Client::connectToServer(char *ip, char *puerto) {
         perror("Could not create socket");
     }
     printf("Socket created\n");
-    //------------------------
 
     // Prepare the sockaddr_in structure
     server.sin_addr.s_addr = inet_addr((const char *) ip);
@@ -40,11 +39,13 @@ void Client::connectToServer(char *ip, char *puerto) {
 
     if (connect(client_socket, (struct sockaddr *) &server, sizeof(struct sockaddr_in)) < 0) {
         perror("connect failed. Error");
+        isConnected = false;
+    } else {
+        printf("Connected\n\n");
+        isConnected = true;
     }
-    printf("Connected\n\n");
     //------------------------
 
-    isConnected = true;
 }
 void Client::chatToServer(){
 
@@ -62,22 +63,22 @@ void Client::chatToServer(){
         // Set data to send
 
         while ( SDL_PollEvent( &event ) ){
-            client_command.command_event = event;
+            command.command_event = event;
         }
 
         //--------------------
 
         // Send data (command)
-        if (sendData(&client_socket, &client_command) < 0){
+        if (sendData(&client_socket, &command) < 0){
             perror("Send Data Error");
         }
 
         // Receive data (view)
-        if (receiveData(&client_socket, &client_view) < 0){
+        if (receiveData(&client_socket, &view) < 0){
             perror("Receive Data Error");
         }
-        printf("Incomming data: pos(X,Y) = (%d,%d)\n\n", client_view.positionX, client_view.positionY);
-        printf("Incomming data: vel(X,Y) = (%d,%d)\n\n", client_view.velocityX, client_view.velocityY);
+        printf("Incomming data: pos(X,Y) = (%d,%d)\n\n", view.positionX, view.positionY);
+        printf("Incomming data: vel(X,Y) = (%d,%d)\n\n", view.velocityX, view.velocityY);
 
         //--------------------
     }

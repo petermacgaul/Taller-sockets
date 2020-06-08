@@ -9,6 +9,14 @@
 
 void Server::initServer(char *argv) {
 
+    clientes_esperados = 4; //cambiar
+
+    clients = new client_info[clientes_esperados];
+
+    for(int i = 0; i < clientes_esperados; i++){
+        clients[i].isConnected = false;
+    }
+
     int port = atoi(argv);
 
     struct sockaddr_in server_addr;
@@ -70,10 +78,10 @@ void Server::initServer(char *argv) {
      listen() marks the socket referred to by sockfd as a passive socket, that is, as a socket that will be used to accept incoming connection requests using accept();
     */
 
-    initializeData(&client_view);
-    clientes_esperados = 2;
-
-    clientes_activos = 0;
+    for(int i = 0; i < clientes_esperados; i++) {
+        initializeData(&clients[i].view);
+        clients[i].hilo = new thread(&Server::receiveData, this, &clients[i]);
+    }
 
     if (listen(serverSocket , clientes_esperados) < 0)
     {
@@ -98,13 +106,13 @@ int Server::sendData(struct View* client_view){
      The send() call may be used only when the socket is in a connected state (so that the intended recipient is known).
      */
 
-    while ((send_data_size > total_bytes_written) && client.isConnected){
-        bytes_written = send(client.clientSocket, (client_view + total_bytes_written), (send_data_size - total_bytes_written), MSG_NOSIGNAL);
+    while ((send_data_size > total_bytes_written) && clients.isConnected){
+        bytes_written = send(clients.clientSocket, (client_view + total_bytes_written), (send_data_size - total_bytes_written), MSG_NOSIGNAL);
         if (bytes_written < 0) { // Error
             return bytes_written;
         }
         else if (bytes_written == 0) { // Socket closed
-            client.isConnected = false;
+            clients.isConnected = false;
         }
         else {
             total_bytes_written += bytes_written;
@@ -114,7 +122,7 @@ int Server::sendData(struct View* client_view){
     return 0;
 }
 
-int Server::receiveData(struct Command* client_command){
+int Server::receiveData(client_info *client){
 
     int total_bytes_receive = 0;
     int bytes_receive = 0;
@@ -131,13 +139,13 @@ int Server::receiveData(struct Command* client_command){
      If no messages are available at the socket, the receive call wait for a message to arrive. (Blocking)
     */
 
-    while ((receive_data_size > bytes_receive) && client.isConnected) {
-        bytes_receive = recv(client.clientSocket, (client_command + total_bytes_receive), (receive_data_size - total_bytes_receive), MSG_NOSIGNAL);
+    while ((receive_data_size > bytes_receive) && clients.isConnected) {
+        bytes_receive = recv(clients.clientSocket, (client + total_bytes_receive), (receive_data_size - total_bytes_receive), MSG_NOSIGNAL);
         if (bytes_receive < 0) { // Error
             return bytes_receive;
         }
         else if (bytes_receive == 0) { // Socket closed
-            client.isConnected = false;
+            clients.isConnected = false;
         }
         else {
             total_bytes_receive += bytes_receive;
@@ -151,8 +159,10 @@ void Server::acceptClient(){
 
     sockaddr_in client_addr;
 
+    client_info client_dummy;
+
     /*
-     Accept incoming connection from a client
+     Accept incoming connection from a clients
      int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
      sockfd -> socket that has been created with socket(), bound to a local address with bind(), and is listening for connections after a listen()
      addr -> pointer to a sockaddr structure for the CLIENT.
@@ -162,7 +172,7 @@ void Server::acceptClient(){
     /*
     while(clientes_esperados != clientes_activos){
         client_info cliente;
-        cliente.clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &client.clientAddrlen);
+        cliente.clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &clients.clientAddrlen);
 
         if (cliente.clientSocket < 0)
         {
@@ -174,17 +184,36 @@ void Server::acceptClient(){
         connections.push_back(cliente);
         clientes_activos++;
     }*/
+
+    client_info* client;
+    int clientes_activos = 0;
+
+    for(int i = 0; i < clientes_esperados; i++){
+        if(clients[i].isConnected){
+            clientes_activos++;
+        }
+    }
+
     while(clientes_activos < clientes_esperados){
 
-        client.clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &client.clientAddrlen);
+        for(int i = 0; i < clientes_esperados; i++){
+            if(!clients[i].isConnected){
+                client = &clients[i];
+                break;
+            }
+        }
+
+        client->clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &client_dummy.clientAddrlen);
         
-        if (client.clientSocket < 0)
+        if (client->clientSocket < 0)
         {
             perror("Accept failed");
         }
         printf("Connection accepted\n\n");
 
-        client.isConnected = true;
+        client->isConnected = true;
+
+        clientes_activos++;
 
         thread second( &Server::chatWhitClients, this );
         second.join();
@@ -205,19 +234,50 @@ void Server::initializeData(struct View* client_view){
 }
 
 void Server::closeServer() {
-    close(client.clientSocket);
-    printf("Client socket number %d closed\n",client.clientSocket);
+    close(clients.clientSocket);
+    printf("Client socket number %d closed\n", clients.clientSocket);
     close(serverSocket);
     printf("Server socket number %d closed\n",serverSocket);
 }
 
 bool Server::playersAreConnected() {
-    return client.isConnected;
+    return clients.isConnected;
 }
 
 void Server::chatWhitClients() {
     printf("chatting with Client. \n");
     /* ToDo: Validar credenciales */
+
+    for(int i = 0; i < clientes_esperados; i++){
+        if(clients[i].isConnected)
+            clients[i].hilo->detach();
+    }
+
+    bool playersAreConnected = true;
+    int clientes_conectados;
+    while(playersAreConnected){
+        clientes_conectados = 0;
+        for(int i = 0; i < clientes_esperados; i++)
+            if(clients[i].isConnected)
+                clientes_conectados++;
+        if(clientes_conectados == 0)
+            playersAreConnected = false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     while ( playersAreConnected() ) {
 

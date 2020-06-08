@@ -1,21 +1,24 @@
 Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_49c80/fast && /usr/bin/make -f CMakeFiles/cmTC_49c80.dir/build.make CMakeFiles/cmTC_49c80.dir/build
-make[1]: se entra en el directorio '/home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_49c80.dir/src.c.o
-/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_49c80.dir/src.c.o   -c /home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_49c80
-/snap/clion/112/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_49c80.dir/link.txt --verbose=1
-/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_49c80.dir/src.c.o  -o cmTC_49c80 
-/usr/bin/ld: CMakeFiles/cmTC_49c80.dir/src.c.o: en la función `main':
-src.c:(.text+0x46): referencia a `pthread_create' sin definir
-/usr/bin/ld: src.c:(.text+0x52): referencia a `pthread_detach' sin definir
-/usr/bin/ld: src.c:(.text+0x63): referencia a `pthread_join' sin definir
+Run Build Command(s):/usr/bin/make cmTC_e67f9/fast && /usr/bin/make -f CMakeFiles/cmTC_e67f9.dir/build.make CMakeFiles/cmTC_e67f9.dir/build
+make[1]: se entra en el directorio '/home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e67f9.dir/src.c.o
+/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_e67f9.dir/src.c.o   -c /home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_e67f9
+/home/nicolas/CLIon/clion-2019.3.5/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e67f9.dir/link.txt --verbose=1
+/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_e67f9.dir/src.c.o  -o cmTC_e67f9 
+CMakeFiles/cmTC_e67f9.dir/src.c.o: En la función `main':
+src.c:(.text+0x3e): referencia a `pthread_create' sin definir
+src.c:(.text+0x4a): referencia a `pthread_detach' sin definir
+src.c:(.text+0x5b): referencia a `pthread_join' sin definir
+src.c:(.text+0x6f): referencia a `pthread_atfork' sin definir
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_49c80.dir/build.make:87: cmTC_49c80] Error 1
-make[1]: se sale del directorio '/home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_49c80/fast] Error 2
+CMakeFiles/cmTC_e67f9.dir/build.make:86: recipe for target 'cmTC_e67f9' failed
+make[1]: *** [cmTC_e67f9] Error 1
+make[1]: se sale del directorio '/home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_e67f9/fast' failed
+make: *** [cmTC_e67f9/fast] Error 2
 
 
 Source file was:
@@ -39,20 +42,22 @@ int main(void)
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_c740a/fast && /usr/bin/make -f CMakeFiles/cmTC_c740a.dir/build.make CMakeFiles/cmTC_c740a.dir/build
-make[1]: se entra en el directorio '/home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_c740a.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_c740a.dir/CheckFunctionExists.c.o   -c /snap/clion/112/bin/cmake/linux/share/cmake-3.16/Modules/CheckFunctionExists.c
-Linking C executable cmTC_c740a
-/snap/clion/112/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c740a.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_c740a.dir/CheckFunctionExists.c.o  -o cmTC_c740a  -lpthreads 
+Run Build Command(s):/usr/bin/make cmTC_b8e01/fast && /usr/bin/make -f CMakeFiles/cmTC_b8e01.dir/build.make CMakeFiles/cmTC_b8e01.dir/build
+make[1]: se entra en el directorio '/home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b8e01.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_b8e01.dir/CheckFunctionExists.c.o   -c /home/nicolas/CLIon/clion-2019.3.5/bin/cmake/linux/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_b8e01
+/home/nicolas/CLIon/clion-2019.3.5/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b8e01.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_b8e01.dir/CheckFunctionExists.c.o  -o cmTC_b8e01  -lpthreads 
 /usr/bin/ld: no se puede encontrar -lpthreads
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_c740a.dir/build.make:87: cmTC_c740a] Error 1
-make[1]: se sale del directorio '/home/peter/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_c740a/fast] Error 2
+CMakeFiles/cmTC_b8e01.dir/build.make:86: recipe for target 'cmTC_b8e01' failed
+make[1]: *** [cmTC_b8e01] Error 1
+make[1]: se sale del directorio '/home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_b8e01/fast' failed
+make: *** [cmTC_b8e01/fast] Error 2
 
 
 

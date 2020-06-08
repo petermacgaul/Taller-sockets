@@ -8,9 +8,9 @@ class Client {
 
     struct sockaddr_in server;
 
-    struct Command client_command;
+    struct Command command;
 
-    struct View client_view;
+    struct View view;
 
     bool isConnected;
 
