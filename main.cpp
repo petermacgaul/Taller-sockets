@@ -14,21 +14,14 @@ int main( int argc, char* argv[] ) {
 //    pthread_t hiloUno ;
 //    pthread_t hiloDos ;
 
-    if( strcmp(argv[1],"SERVER") == 0 ){
+    if( argc == 3 && strcmp(argv[1],"SERVER") == 0 ){
         server.initServer(argv[2]);
-
-        thread client_acceptor ( &Server::acceptClient, server );
-        client_acceptor.join();
-
-        thread client_chatter ( &Server::chatWhitClients, server );
-        client_chatter.join();
 
         server.closeServer();
 
     }
 
-    if( strcmp(argv[1],"CLIENT") == 0 ) {
-
+    if( argc == 4 && strcmp(argv[1],"CLIENT") == 0 ) {
 
         cliente.connectToServer(argv[2], argv[3]);
 

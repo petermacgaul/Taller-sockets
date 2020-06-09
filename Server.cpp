@@ -9,13 +9,7 @@
 
 void Server::initServer(char *argv) {
 
-    clientes_esperados = 4; //cambiar
-
-    clients = new client_info[clientes_esperados];
-
-    for(int i = 0; i < clientes_esperados; i++){
-        clients[i].isConnected = false;
-    }
+    clientes_esperados = 4; //Todo: cambiar
 
     int port = atoi(argv);
 
@@ -31,6 +25,7 @@ void Server::initServer(char *argv) {
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
         perror("Could not create socket");
+        return;
     }
     printf("Socket created\n");
     //------------------------
@@ -66,6 +61,7 @@ void Server::initServer(char *argv) {
 
     if (bind(serverSocket, (struct sockaddr *) &server_addr, sizeof(server_addr)) < 0) {
         perror("Bind failed. Error");
+        return;
     }
     printf("Bind done\n");
     //------------------------
@@ -78,18 +74,20 @@ void Server::initServer(char *argv) {
      listen() marks the socket referred to by sockfd as a passive socket, that is, as a socket that will be used to accept incoming connection requests using accept();
     */
 
-    for(int i = 0; i < clientes_esperados; i++) {
-        initializeData(&clients[i].view);
-        clients[i].hilo = new thread(&Server::receiveData, this, &clients[i]);
-    }
-
     if (listen(serverSocket , clientes_esperados) < 0)
     {
         perror("Listen failed. Error");
+        return;
     }
+
+    thread client_acceptor ( &Server::acceptClient, this );
+
+    client_acceptor.detach();
+
+    desencolar();
 }
 
-int Server::sendData(struct View* client_view){
+int Server::sendData(client_info *client) {
 
     int total_bytes_written = 0;
     int bytes_written = 0;
@@ -106,13 +104,14 @@ int Server::sendData(struct View* client_view){
      The send() call may be used only when the socket is in a connected state (so that the intended recipient is known).
      */
 
-    while ((send_data_size > total_bytes_written) && clients.isConnected){
-        bytes_written = send(clients.clientSocket, (client_view + total_bytes_written), (send_data_size - total_bytes_written), MSG_NOSIGNAL);
+    while ((send_data_size > total_bytes_written) && client->isConnected){
+        bytes_written = send(client->clientSocket, (&client->view + total_bytes_written), (send_data_size - total_bytes_written), MSG_NOSIGNAL);
         if (bytes_written < 0) { // Error
+            client->isConnected = false;
             return bytes_written;
         }
         else if (bytes_written == 0) { // Socket closed
-            clients.isConnected = false;
+            client->isConnected = false;
         }
         else {
             total_bytes_written += bytes_written;
@@ -139,13 +138,14 @@ int Server::receiveData(client_info *client){
      If no messages are available at the socket, the receive call wait for a message to arrive. (Blocking)
     */
 
-    while ((receive_data_size > bytes_receive) && clients.isConnected) {
-        bytes_receive = recv(clients.clientSocket, (client + total_bytes_receive), (receive_data_size - total_bytes_receive), MSG_NOSIGNAL);
+    while ((receive_data_size > bytes_receive) && client->isConnected) {
+        bytes_receive = recv(client->clientSocket, (&client->command + total_bytes_receive), (receive_data_size - total_bytes_receive), MSG_WAITALL);
         if (bytes_receive < 0) { // Error
+            client->isConnected = false;
             return bytes_receive;
         }
         else if (bytes_receive == 0) { // Socket closed
-            clients.isConnected = false;
+            client->isConnected = false;
         }
         else {
             total_bytes_receive += bytes_receive;
@@ -159,7 +159,7 @@ void Server::acceptClient(){
 
     sockaddr_in client_addr;
 
-    client_info client_dummy;
+    int clientAddrlen;
 
     /*
      Accept incoming connection from a clients
@@ -185,45 +185,75 @@ void Server::acceptClient(){
         clientes_activos++;
     }*/
 
-    client_info* client;
     int clientes_activos = 0;
-
-    for(int i = 0; i < clientes_esperados; i++){
-        if(clients[i].isConnected){
-            clientes_activos++;
-        }
-    }
 
     while(clientes_activos < clientes_esperados){
 
-        for(int i = 0; i < clientes_esperados; i++){
-            if(!clients[i].isConnected){
-                client = &clients[i];
-                break;
-            }
-        }
+        int clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &clientAddrlen);
 
-        client->clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &client_dummy.clientAddrlen);
-        
-        if (client->clientSocket < 0)
+        if (clientSocket < 0)
         {
             perror("Accept failed");
+            return;
         }
-        printf("Connection accepted\n\n");
-
-        client->isConnected = true;
+        printf("\nConnection accepted\n");
 
         clientes_activos++;
 
-        thread second( &Server::chatWhitClients, this );
-        second.join();
-    }
+        client_info* client = &clients[clientSocket];
 
+        client->isConnected = true;
+        client->clientSocket = clientSocket;
+        client->clientAddrlen = clientAddrlen;
+        initializeData(&client->view);
+
+        thread hiloChatter(&Server::chatWhitClients, this , client->clientSocket);
+        hiloChatter.detach();
+    }
 }
 
-void Server::processData(SDL_Event event, struct View* view) {
-    //manage events.
+void Server::processData(Command* command, View* view) {
 
+    int PLAYER_VEL = 10;
+
+    if (command->command_event.type == SDL_KEYDOWN && command->command_event.key.repeat == 0) {
+
+        //Adjust the velocity
+        switch (command->command_event.key.keysym.sym) {
+            case SDLK_UP:
+                (*view).positionY -= PLAYER_VEL / 4;
+                break;
+            case SDLK_DOWN:
+                (*view).positionY += PLAYER_VEL / 4;
+                break;
+            case SDLK_LEFT:
+                (*view).positionX -= PLAYER_VEL / 3;
+                break;
+            case SDLK_RIGHT:
+                (*view).positionX += PLAYER_VEL / 5;
+                break;
+        }
+
+    }
+        //If a key was released
+    else if (command->command_event.type == SDL_KEYUP && command->command_event.key.repeat == 0) {
+
+        //Adjust the velocity
+        switch (command->command_event.key.keysym.sym) {
+            case SDLK_UP:
+                (*view).positionY += PLAYER_VEL / 4;
+                break;
+            case SDLK_DOWN:
+                (*view).positionY -= PLAYER_VEL / 4;
+                break;
+            case SDLK_LEFT:
+                (*view).positionX += PLAYER_VEL / 3;
+                break;
+            case SDLK_RIGHT:
+                (*view).positionX -= PLAYER_VEL / 5;
+                break;
+        }
+    }
 }
 
 void Server::initializeData(struct View* client_view){
@@ -234,94 +264,64 @@ void Server::initializeData(struct View* client_view){
 }
 
 void Server::closeServer() {
-    close(clients.clientSocket);
-    printf("Client socket number %d closed\n", clients.clientSocket);
+    for (int i = 0; i < clientes_esperados; ++i) {
+        if (clients[i].isConnected){
+            close(clients[i].clientSocket);
+            printf("Client socket number %d closed\n", clients[i].clientSocket);
+        }
+    }
     close(serverSocket);
     printf("Server socket number %d closed\n",serverSocket);
 }
 
 bool Server::playersAreConnected() {
-    return clients.isConnected;
+    for(int i = 0; i<clientes_esperados;i++){
+        if (clients[i].isConnected){
+            return true;
+        }
+    }
+    return false;
 }
 
-void Server::chatWhitClients() {
-    printf("chatting with Client. \n");
+void Server::chatWhitClients(int client_socket) {
+    printf("Socket of Client: %d \n\n",client_socket);
     /* ToDo: Validar credenciales */
 
-    for(int i = 0; i < clientes_esperados; i++){
-        if(clients[i].isConnected)
-            clients[i].hilo->detach();
+    QueueCommand queueCommand;
+    queueCommand.client_socket = client_socket;
+    client_info client = clients[client_socket];
+
+    while( client.isConnected ){
+        receiveData(&client);
+
+        queueCommand.command = client.command;
+
+        colaDeEventos.push(queueCommand);
     }
-
-    bool playersAreConnected = true;
-    int clientes_conectados;
-    while(playersAreConnected){
-        clientes_conectados = 0;
-        for(int i = 0; i < clientes_esperados; i++)
-            if(clients[i].isConnected)
-                clientes_conectados++;
-        if(clientes_conectados == 0)
-            playersAreConnected = false;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    while ( playersAreConnected() ) {
-
-        // Receive data (command)
-        receiveData(&client_command);
-
-        // Process model
-        processData( client_command.command_event, &client_view);
-        //--------------------
-
-        // Send data (view)
-        if (sendData(&client_view) < 0) {
-            perror("Send Data Error");
-        }
-        printf("Send data: pos(X,Y) = (%d,%d)\n\n", client_view.positionX, client_view.positionY);
-        printf("Send data: vel(X,Y) = (%d,%d)\n\n", client_view.velocityX, client_view.velocityY);
-        //--------------------
-    }
-
 }
 
 void Server::desencolar(){
-//    //EventoInput mensaje;
-//    while (/*ToDo:server conectado*/) {
-//        while (/* ToDo:cola de eventos != vacia */) {
-//            /*ToDo: desencolo */
-//
-//            /*ToDo: proceso la informacion desencolada*/
-//
-//            /*ToDo: mando info a todos los sockets */
-//        }
-//        usleep(1000);
-//    }
+    QueueCommand command;
+    while ( 1/*ToDo: Players connected && game running*/ ) {
+        while (!colaDeEventos.isEmpty()) {
+            command = colaDeEventos.pop();
+
+            processData(&command.command,&clients[command.client_socket].view);
+
+            //enviarInformacionAClientes();
+            for (auto it=clients.begin(); it!=clients.end(); ++it){
+                sendData(&it->second);
+            }
+        }
+        usleep(1000);
+    }
 }
 
 int Server::enviarInformacionAClientes(){
-//    for (/* Conexiones : conections */) {
-//        try {
-//            if (/* ToDo: conexion activa*/){
-//                /*ToDo: mandar vista */
-//            }
-//        } catch (/*SocketExection& e*/) {
-//
-//        }
-//    }
+    for (int i = 0; i < clientes_esperados ;i++) {
+        if (clients[i].isConnected){
+            //sendData(&clients);
+        }
+    }
     return 0;
 }

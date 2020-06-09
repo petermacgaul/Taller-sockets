@@ -52,9 +52,12 @@ void Client::chatToServer(){
     // data to send
     SDL_Init (SDL_INIT_VIDEO);
 
+
+
     SDL_Event event;
     event.type = SDL_KEYDOWN;
     event.key.keysym.sym = SDLK_UP;
+    event.key.repeat = 0;
     SDL_PushEvent(&event);
 
     //keep communicating with server
@@ -65,7 +68,7 @@ void Client::chatToServer(){
         while ( SDL_PollEvent( &event ) ){
             command.command_event = event;
         }
-
+        printf("Mande el evento ------------- \n");
         //--------------------
 
         // Send data (command)

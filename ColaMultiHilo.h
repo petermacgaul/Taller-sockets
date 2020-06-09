@@ -31,9 +31,11 @@ public:
 
     T pop(){
         mutexLocker.lock();
+        T item = cola.front();
         cola.pop();
         cantidadDeElementos--;
         mutexLocker.unlock();
+        return item;
     }
 
     bool isEmpty(){

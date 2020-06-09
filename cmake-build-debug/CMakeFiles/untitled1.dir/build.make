@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/nicolas/CLIon/clion-2019.3.5/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/114/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/nicolas/CLIon/clion-2019.3.5/bin/cmake/linux/bin/cmake -E remove -f
+RM = /snap/clion/114/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nicolas/CLionProjects/Taller-sockets
+CMAKE_SOURCE_DIR = "/home/peter/CLionProjects/Taller sockets"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug
+CMAKE_BINARY_DIR = "/home/peter/CLionProjects/Taller sockets/cmake-build-debug"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/untitled1.dir/depend.make
@@ -59,62 +59,48 @@ include CMakeFiles/untitled1.dir/flags.make
 
 CMakeFiles/untitled1.dir/main.cpp.o: CMakeFiles/untitled1.dir/flags.make
 CMakeFiles/untitled1.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/untitled1.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/untitled1.dir/main.cpp.o -c /home/nicolas/CLionProjects/Taller-sockets/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/peter/CLionProjects/Taller sockets/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/untitled1.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/untitled1.dir/main.cpp.o -c "/home/peter/CLionProjects/Taller sockets/main.cpp"
 
 CMakeFiles/untitled1.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled1.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nicolas/CLionProjects/Taller-sockets/main.cpp > CMakeFiles/untitled1.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/peter/CLionProjects/Taller sockets/main.cpp" > CMakeFiles/untitled1.dir/main.cpp.i
 
 CMakeFiles/untitled1.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled1.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nicolas/CLionProjects/Taller-sockets/main.cpp -o CMakeFiles/untitled1.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/peter/CLionProjects/Taller sockets/main.cpp" -o CMakeFiles/untitled1.dir/main.cpp.s
 
 CMakeFiles/untitled1.dir/Server.cpp.o: CMakeFiles/untitled1.dir/flags.make
 CMakeFiles/untitled1.dir/Server.cpp.o: ../Server.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/untitled1.dir/Server.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/untitled1.dir/Server.cpp.o -c /home/nicolas/CLionProjects/Taller-sockets/Server.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/peter/CLionProjects/Taller sockets/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/untitled1.dir/Server.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/untitled1.dir/Server.cpp.o -c "/home/peter/CLionProjects/Taller sockets/Server.cpp"
 
 CMakeFiles/untitled1.dir/Server.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled1.dir/Server.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nicolas/CLionProjects/Taller-sockets/Server.cpp > CMakeFiles/untitled1.dir/Server.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/peter/CLionProjects/Taller sockets/Server.cpp" > CMakeFiles/untitled1.dir/Server.cpp.i
 
 CMakeFiles/untitled1.dir/Server.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled1.dir/Server.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nicolas/CLionProjects/Taller-sockets/Server.cpp -o CMakeFiles/untitled1.dir/Server.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/peter/CLionProjects/Taller sockets/Server.cpp" -o CMakeFiles/untitled1.dir/Server.cpp.s
 
 CMakeFiles/untitled1.dir/Client.cpp.o: CMakeFiles/untitled1.dir/flags.make
 CMakeFiles/untitled1.dir/Client.cpp.o: ../Client.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/untitled1.dir/Client.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/untitled1.dir/Client.cpp.o -c /home/nicolas/CLionProjects/Taller-sockets/Client.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/peter/CLionProjects/Taller sockets/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/untitled1.dir/Client.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/untitled1.dir/Client.cpp.o -c "/home/peter/CLionProjects/Taller sockets/Client.cpp"
 
 CMakeFiles/untitled1.dir/Client.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled1.dir/Client.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nicolas/CLionProjects/Taller-sockets/Client.cpp > CMakeFiles/untitled1.dir/Client.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/peter/CLionProjects/Taller sockets/Client.cpp" > CMakeFiles/untitled1.dir/Client.cpp.i
 
 CMakeFiles/untitled1.dir/Client.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled1.dir/Client.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nicolas/CLionProjects/Taller-sockets/Client.cpp -o CMakeFiles/untitled1.dir/Client.cpp.s
-
-CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o: CMakeFiles/untitled1.dir/flags.make
-CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o: ../ColaMultiHilo.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o -c /home/nicolas/CLionProjects/Taller-sockets/ColaMultiHilo.cpp
-
-CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nicolas/CLionProjects/Taller-sockets/ColaMultiHilo.cpp > CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.i
-
-CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nicolas/CLionProjects/Taller-sockets/ColaMultiHilo.cpp -o CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/peter/CLionProjects/Taller sockets/Client.cpp" -o CMakeFiles/untitled1.dir/Client.cpp.s
 
 # Object files for target untitled1
 untitled1_OBJECTS = \
 "CMakeFiles/untitled1.dir/main.cpp.o" \
 "CMakeFiles/untitled1.dir/Server.cpp.o" \
-"CMakeFiles/untitled1.dir/Client.cpp.o" \
-"CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o"
+"CMakeFiles/untitled1.dir/Client.cpp.o"
 
 # External object files for target untitled1
 untitled1_EXTERNAL_OBJECTS =
@@ -122,12 +108,11 @@ untitled1_EXTERNAL_OBJECTS =
 ../bin/untitled1: CMakeFiles/untitled1.dir/main.cpp.o
 ../bin/untitled1: CMakeFiles/untitled1.dir/Server.cpp.o
 ../bin/untitled1: CMakeFiles/untitled1.dir/Client.cpp.o
-../bin/untitled1: CMakeFiles/untitled1.dir/ColaMultiHilo.cpp.o
 ../bin/untitled1: CMakeFiles/untitled1.dir/build.make
 ../bin/untitled1: /usr/lib/x86_64-linux-gnu/libSDL2main.a
 ../bin/untitled1: /usr/lib/x86_64-linux-gnu/libSDL2.so
 ../bin/untitled1: CMakeFiles/untitled1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ../bin/untitled1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/peter/CLionProjects/Taller sockets/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable ../bin/untitled1"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/untitled1.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -140,6 +125,6 @@ CMakeFiles/untitled1.dir/clean:
 .PHONY : CMakeFiles/untitled1.dir/clean
 
 CMakeFiles/untitled1.dir/depend:
-	cd /home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nicolas/CLionProjects/Taller-sockets /home/nicolas/CLionProjects/Taller-sockets /home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug /home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug /home/nicolas/CLionProjects/Taller-sockets/cmake-build-debug/CMakeFiles/untitled1.dir/DependInfo.cmake --color=$(COLOR)
+	cd "/home/peter/CLionProjects/Taller sockets/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/peter/CLionProjects/Taller sockets" "/home/peter/CLionProjects/Taller sockets" "/home/peter/CLionProjects/Taller sockets/cmake-build-debug" "/home/peter/CLionProjects/Taller sockets/cmake-build-debug" "/home/peter/CLionProjects/Taller sockets/cmake-build-debug/CMakeFiles/untitled1.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/untitled1.dir/depend
 

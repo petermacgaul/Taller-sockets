@@ -5,38 +5,39 @@
 #include <vector>
 #include <thread>
 
+#include "ColaMultiHilo.h"
 #include "CommunicateData.h"
+#include <map>
 
 using namespace std;
 
-typedef struct Client {
+struct QueueCommand{
+    Command command;
+    int client_socket;
+};
+
+typedef struct Cliente {
     bool isConnected;
     int clientSocket;
     int clientAddrlen;
-    thread* hilo;
     View view;
     Command command;
 } client_info;
 
 class Server {
     int serverSocket;
-    //ToDo: 2 Threads del server, 1 para enviar data, otro para aceptar clientes
 
-    client_info* clients;
+    map<int,client_info> clients;
 
     int clientes_esperados;
 
-    vector<client_info> connections;
-
-    struct Command client_command;
+    ColaMultiHilo<QueueCommand> colaDeEventos;
 
     void initializeData(struct View* client_view);
 
-    bool playersAreConnected();
+    void processData(Command* command, View* view);
 
-    void processData(SDL_Event event, struct View* view);
-
-    int sendData(struct View* client_view);
+    int sendData(client_info *client);
 
     void desencolar();
 
@@ -48,12 +49,13 @@ public:
 
     void acceptClient();
 
-    void chatWhitClients();
+    void chatWhitClients(int client_socket);
 
     int receiveData(client_info *client);
 
     void closeServer();
 
+    bool playersAreConnected();
 };
 
 

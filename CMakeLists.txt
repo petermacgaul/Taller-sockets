@@ -16,7 +16,7 @@ set(SOURCE_FILES
         Server.cpp Server.h
         Client.cpp Client.h
 
-        CommunicateData.h ColaMultiHilo.cpp ColaMultiHilo.h)
+        CommunicateData.h ColaMultiHilo.h)
 
 
 add_executable(untitled1 ${SOURCE_FILES})
