@@ -37,12 +37,13 @@ void Client::connectToServer(char *ip, char *puerto) {
      The connect() system call connects the socket referred to by the file descriptor sockfd to the address specified by addr.
      */
 
-    if (connect(client_socket, (struct sockaddr *) &server, sizeof(struct sockaddr_in)) < 0) {
+    if (connect(client_socket, (struct sockaddr *) &server, sizeof(server)) < 0) {
         perror("connect failed. Error");
         isConnected = false;
     } else {
         printf("Connected\n\n");
         isConnected = true;
+        chatToServer();
     }
 }
 void Client::chatToServer(){
@@ -81,6 +82,7 @@ void Client::chatToServer(){
             printf("Incomming data: vel(X,Y) = (%d,%d)\n\n", view.velocityX, view.velocityY);
         }
     }
+    closeClient();
 }
 
 int Client::sendData(int *client_socket, struct Command *client_command) {

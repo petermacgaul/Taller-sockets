@@ -7,7 +7,7 @@
 #include <thread>
 
 
-void Server::initServer(char *argv) {
+int Server::initServer(char *argv) {
 
     int port = atoi(argv);
 
@@ -23,7 +23,7 @@ void Server::initServer(char *argv) {
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
         perror("Could not create socket");
-        return;
+        return -1;
     }
     printf("Socket created\n");
     //------------------------
@@ -59,7 +59,7 @@ void Server::initServer(char *argv) {
 
     if (bind(serverSocket, (struct sockaddr *) &server_addr, sizeof(server_addr)) < 0) {
         perror("Bind failed. Error");
-        return;
+        return -1;
     }
     printf("Bind done\n");
     //------------------------
@@ -71,16 +71,73 @@ void Server::initServer(char *argv) {
      backlog-> The backlog argument defines the maximum length to which the queue of pending connections for sockfd may grow.
      listen() marks the socket referred to by sockfd as a passive socket, that is, as a socket that will be used to accept incoming connection requests using accept();
     */
-    clientes_esperados = 4; //ToDo: cambiar se lee del config
+    clientes_esperados = 2 ; //ToDo: cambiar se lee del config
 
     if (listen(serverSocket , clientes_esperados) < 0)
     {
         perror("Listen failed. Error");
-        return;
+        return -1;
     }
     server_online = true;
 
-    acceptClient();
+    return acceptClient();
+}
+
+int Server::acceptClient(){
+
+    sockaddr_in client_addr;
+
+    int clientAddrlen;
+
+    /*
+     Accept incoming connection from a clients
+     int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+     sockfd -> socket that has been created with socket(), bound to a local address with bind(), and is listening for connections after a listen()
+     addr -> pointer to a sockaddr structure for the CLIENT.
+     addrlen -> size of sockaddr structure for the CLIENT.
+     */
+
+    int clientes_activos = howManyPlayersAreConnected();
+
+    while(server_online && clientes_activos < clientes_esperados){
+
+        int clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &clientAddrlen);
+
+        if (clientSocket < 0)
+        {
+            perror("Accept failed");
+            continue;
+        }
+
+        printf("\nConnection accepted\n");
+
+        clientes_activos++;
+
+        client_info* client = &clients[clientSocket];
+        client->clientSocket = clientSocket;
+        client->clientAddrlen = clientAddrlen;
+        client->isConnected = true;
+        initializeData(&client->view);
+
+        if(clients.size() == 1){
+            thread hiloDesencolador(&Server::desencolar, this );
+            hiloDesencolador.detach();
+        }
+
+        thread hiloChatter(&Server::chatWhitClients, this , client->clientSocket);
+        hiloChatter.detach();
+    }
+
+    while (server_online){
+        if (clientes_activos == clientes_esperados){
+            clientes_activos = howManyPlayersAreConnected();
+            usleep(1000);
+        }
+        else{
+            return acceptClient();
+        }
+    }
+    return 0;
 }
 
 int Server::sendData(client_info *client) {
@@ -151,53 +208,6 @@ int Server::receiveData(client_info *client){
     return 0;
 }
 
-void Server::acceptClient(){
-
-    sockaddr_in client_addr;
-
-    int clientAddrlen;
-
-    /*
-     Accept incoming connection from a clients
-     int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
-     sockfd -> socket that has been created with socket(), bound to a local address with bind(), and is listening for connections after a listen()
-     addr -> pointer to a sockaddr structure for the CLIENT.
-     addrlen -> size of sockaddr structure for the CLIENT.
-     */
-
-    int clientes_activos = 0;
-
-    while(server_online){
-
-        int clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &clientAddrlen);
-
-        if (clientSocket < 0)
-        {
-            perror("Accept failed");
-            continue;
-        }
-
-        printf("\nConnection accepted\n");
-
-        clientes_activos++;
-
-        client_info* client = &clients[clientSocket];
-
-        client->isConnected = true;
-        client->clientSocket = clientSocket;
-        client->clientAddrlen = clientAddrlen;
-        initializeData(&client->view);
-
-        if(clients.size() == 1){
-            thread hiloDesencolador(&Server::desencolar, this );
-            hiloDesencolador.detach();
-        }
-
-        thread hiloChatter(&Server::chatWhitClients, this , client->clientSocket);
-        hiloChatter.detach();
-    }
-}
-
 void Server::processData(Command* command, View* view) {
 
     int PLAYER_VEL = 10;
@@ -258,9 +268,9 @@ void Server::closeServer() {
     }
     server_online = false;
 
-
     printf("Server socket number %d closed\n",serverSocket);
     printf("Closing server \n");
+
     shutdown(serverSocket,SHUT_RDWR);
 }
 
@@ -307,4 +317,14 @@ void Server::desencolar(){
         usleep(1000);
     }
     closeServer();
+}
+
+int Server::howManyPlayersAreConnected(){
+    int i = 0;
+    for (auto it=clients.begin(); it!=clients.end(); ++it){
+        if (it->second.isConnected){
+            i++;
+        }
+    }
+    return i;
 }

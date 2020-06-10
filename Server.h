@@ -26,12 +26,14 @@ typedef struct Cliente {
 
 class Server {
     int serverSocket;
+    bool server_online;
 
     map<int,client_info> clients;
-
     int clientes_esperados;
 
     ColaMultiHilo<QueueCommand> colaDeEventos;
+
+
 
     void initializeData(struct View* client_view);
 
@@ -41,23 +43,22 @@ class Server {
 
     void desencolar();
 
-    int enviarInformacionAClientes();
-
-
-public:
-    void initServer(char *argv);
-
-    void acceptClient();
+    int acceptClient();
 
     void chatWhitClients(int client_socket);
 
     int receiveData(client_info *client);
 
+    int howManyPlayersAreConnected();
+
     void closeServer();
 
     bool playersAreConnected();
 
-    bool server_online;
+public:
+    int initServer(char *argv);
+
+
 };
 
 
