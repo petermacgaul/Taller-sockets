@@ -44,15 +44,11 @@ void Client::connectToServer(char *ip, char *puerto) {
         printf("Connected\n\n");
         isConnected = true;
     }
-    //------------------------
-
 }
 void Client::chatToServer(){
 
     // data to send
     SDL_Init (SDL_INIT_VIDEO);
-
-
 
     SDL_Event event;
     event.type = SDL_KEYDOWN;
@@ -68,22 +64,22 @@ void Client::chatToServer(){
         while ( SDL_PollEvent( &event ) ){
             command.command_event = event;
         }
-        printf("Mande el evento ------------- \n");
-        //--------------------
 
         // Send data (command)
-        if (sendData(&client_socket, &command) < 0){
+        if (sendData(&client_socket, &command) < 0 && isConnected){
             perror("Send Data Error");
+            isConnected = false;
         }
 
         // Receive data (view)
-        if (receiveData(&client_socket, &view) < 0){
+        if (receiveData(&client_socket, &view) < 0 && isConnected){
             perror("Receive Data Error");
+            isConnected = false;
         }
-        printf("Incomming data: pos(X,Y) = (%d,%d)\n\n", view.positionX, view.positionY);
-        printf("Incomming data: vel(X,Y) = (%d,%d)\n\n", view.velocityX, view.velocityY);
-
-        //--------------------
+        else {
+            printf("Incomming data: pos(X,Y) = (%d,%d)\n\n", view.positionX, view.positionY);
+            printf("Incomming data: vel(X,Y) = (%d,%d)\n\n", view.velocityX, view.velocityY);
+        }
     }
 }
 

@@ -1,8 +1,3 @@
-#include <SDL2/SDL.h>
-
-#include <pthread.h>
-#include <thread>
-#include <zconf.h>
 
 #include "Server.h"
 #include "Client.h"
@@ -11,13 +6,9 @@ int main( int argc, char* argv[] ) {
     Server server;
     Client cliente;
 
-//    pthread_t hiloUno ;
-//    pthread_t hiloDos ;
-
     if( argc == 3 && strcmp(argv[1],"SERVER") == 0 ){
-        server.initServer(argv[2]);
 
-        server.closeServer();
+        server.initServer(argv[2]);
 
     }
 

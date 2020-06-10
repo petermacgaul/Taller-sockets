@@ -56,6 +56,8 @@ public:
     void closeServer();
 
     bool playersAreConnected();
+
+    bool server_online;
 };
 
 

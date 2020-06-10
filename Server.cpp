@@ -9,8 +9,6 @@
 
 void Server::initServer(char *argv) {
 
-    clientes_esperados = 4; //ToDo: cambiar se lee del config
-
     int port = atoi(argv);
 
     struct sockaddr_in server_addr;
@@ -73,13 +71,14 @@ void Server::initServer(char *argv) {
      backlog-> The backlog argument defines the maximum length to which the queue of pending connections for sockfd may grow.
      listen() marks the socket referred to by sockfd as a passive socket, that is, as a socket that will be used to accept incoming connection requests using accept();
     */
+    clientes_esperados = 4; //ToDo: cambiar se lee del config
 
     if (listen(serverSocket , clientes_esperados) < 0)
     {
         perror("Listen failed. Error");
         return;
     }
-
+    server_online = true;
 
     acceptClient();
 }
@@ -166,33 +165,18 @@ void Server::acceptClient(){
      addrlen -> size of sockaddr structure for the CLIENT.
      */
 
-    /*
-    while(clientes_esperados != clientes_activos){
-        client_info cliente;
-        cliente.clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &clients.clientAddrlen);
-
-        if (cliente.clientSocket < 0)
-        {
-            perror("Accept failed");
-        }
-        printf("Connection accepted\n\n");
-
-        cliente.isConnected = true;
-        connections.push_back(cliente);
-        clientes_activos++;
-    }*/
-
     int clientes_activos = 0;
 
-    while(clientes_activos < clientes_esperados){
+    while(server_online){
 
         int clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &clientAddrlen);
 
         if (clientSocket < 0)
         {
             perror("Accept failed");
-            return;
+            continue;
         }
+
         printf("\nConnection accepted\n");
 
         clientes_activos++;
@@ -204,14 +188,13 @@ void Server::acceptClient(){
         client->clientAddrlen = clientAddrlen;
         initializeData(&client->view);
 
-        thread hiloChatter(&Server::chatWhitClients, this , client->clientSocket);
-        hiloChatter.detach();
-
-        if(clientes_activos == 1){
+        if(clients.size() == 1){
             thread hiloDesencolador(&Server::desencolar, this );
             hiloDesencolador.detach();
         }
 
+        thread hiloChatter(&Server::chatWhitClients, this , client->clientSocket);
+        hiloChatter.detach();
     }
 }
 
@@ -267,14 +250,18 @@ void Server::initializeData(struct View* client_view){
 }
 
 void Server::closeServer() {
-    for (int i = 0; i < clientes_esperados; ++i) {
-        if (clients[i].isConnected){
-            close(clients[i].clientSocket);
-            printf("Client socket number %d closed\n", clients[i].clientSocket);
+    for (auto it=clients.begin(); it!=clients.end(); ++it) {
+        if (it->second.isConnected){
+            close(it->second.clientSocket);
+            printf("Client socket number %d closed\n", it->second.clientSocket);
         }
     }
-    close(serverSocket);
+    server_online = false;
+
+
     printf("Server socket number %d closed\n",serverSocket);
+    printf("Closing server \n");
+    shutdown(serverSocket,SHUT_RDWR);
 }
 
 bool Server::playersAreConnected() {
@@ -292,12 +279,12 @@ void Server::chatWhitClients(int client_socket) {
 
     QueueCommand queueCommand;
     queueCommand.client_socket = client_socket;
-    client_info client = clients[client_socket];
+    client_info* client = &clients[client_socket];
 
-    while( client.isConnected ){
-        receiveData(&client);
+    while( client->isConnected && server_online ){
+        receiveData(client);
 
-        queueCommand.command = client.command;
+        queueCommand.command = client->command;
 
         colaDeEventos.push(queueCommand);
     }
@@ -313,9 +300,11 @@ void Server::desencolar(){
 
             //Mando la informacion a todos los clientes
             for (auto it=clients.begin(); it!=clients.end(); ++it){
-                sendData(&it->second);
+                if (&it->second.isConnected)
+                    sendData(&it->second);
             }
         }
         usleep(1000);
     }
+    closeServer();
 }
