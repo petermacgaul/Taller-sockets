@@ -9,7 +9,7 @@
 
 void Server::initServer(char *argv) {
 
-    clientes_esperados = 4; //Todo: cambiar
+    clientes_esperados = 4; //ToDo: cambiar se lee del config
 
     int port = atoi(argv);
 
@@ -80,11 +80,8 @@ void Server::initServer(char *argv) {
         return;
     }
 
-    thread client_acceptor ( &Server::acceptClient, this );
 
-    client_acceptor.detach();
-
-    desencolar();
+    acceptClient();
 }
 
 int Server::sendData(client_info *client) {
@@ -209,6 +206,12 @@ void Server::acceptClient(){
 
         thread hiloChatter(&Server::chatWhitClients, this , client->clientSocket);
         hiloChatter.detach();
+
+        if(clientes_activos == 1){
+            thread hiloDesencolador(&Server::desencolar, this );
+            hiloDesencolador.detach();
+        }
+
     }
 }
 
@@ -275,8 +278,8 @@ void Server::closeServer() {
 }
 
 bool Server::playersAreConnected() {
-    for(int i = 0; i<clientes_esperados;i++){
-        if (clients[i].isConnected){
+    for (auto it=clients.begin(); it!=clients.end(); ++it){
+        if (it->second.isConnected){
             return true;
         }
     }
@@ -302,26 +305,17 @@ void Server::chatWhitClients(int client_socket) {
 
 void Server::desencolar(){
     QueueCommand command;
-    while ( 1/*ToDo: Players connected && game running*/ ) {
+    while ( playersAreConnected() ) {
         while (!colaDeEventos.isEmpty()) {
             command = colaDeEventos.pop();
 
             processData(&command.command,&clients[command.client_socket].view);
 
-            //enviarInformacionAClientes();
+            //Mando la informacion a todos los clientes
             for (auto it=clients.begin(); it!=clients.end(); ++it){
                 sendData(&it->second);
             }
         }
         usleep(1000);
     }
-}
-
-int Server::enviarInformacionAClientes(){
-    for (int i = 0; i < clientes_esperados ;i++) {
-        if (clients[i].isConnected){
-            //sendData(&clients);
-        }
-    }
-    return 0;
 }

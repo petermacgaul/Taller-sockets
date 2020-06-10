@@ -7,8 +7,6 @@ struct Command {
     SDL_Event command_event ;
 };
 
-
-
 struct View {
     int positionX;
     int positionY;

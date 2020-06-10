@@ -2,6 +2,8 @@
 #define TALLER_CLIENT_H
 
 #include "CommunicateData.h"
+#include <thread>
+using namespace std;
 
 class Client {
     int client_socket;
@@ -25,6 +27,8 @@ public:
     int sendData(int* client_socket, struct Command* client_command);
 
     void chatToServer();
+
+    void recibeDataFromServer();
 
 };
 

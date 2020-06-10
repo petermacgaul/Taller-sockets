@@ -1,6 +1,3 @@
-//
-// Created by peter on 7/6/20.
-//
 
 #ifndef UNTITLED1_COLAMULTIHILO_H
 #define UNTITLED1_COLAMULTIHILO_H
