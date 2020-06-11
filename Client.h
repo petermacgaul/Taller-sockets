@@ -20,7 +20,7 @@ public:
 
     void closeClient();
 
-    void connectToServer(char *ip, char *port);
+    int connectToServer(char *ip, char *port);
 
     int receiveData(int* client_socket, struct View* client_view);
 
@@ -30,6 +30,9 @@ public:
 
     void recibeDataFromServer();
 
+    void sendDataToServer();
+
+    int processEvent(SDL_Event event);
 };
 
 

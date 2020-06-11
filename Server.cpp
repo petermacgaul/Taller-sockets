@@ -89,6 +89,10 @@ int Server::acceptClient(){
 
     int clientAddrlen;
 
+    struct timeval tv;
+    tv.tv_sec = 10;
+    tv.tv_usec = 0;
+
     /*
      Accept incoming connection from a clients
      int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
@@ -108,6 +112,8 @@ int Server::acceptClient(){
             perror("Accept failed");
             continue;
         }
+
+        setsockopt(clientSocket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 
         printf("\nConnection accepted\n");
 
@@ -209,46 +215,20 @@ int Server::receiveData(client_info *client){
 }
 
 void Server::processData(Command* command, View* view) {
-
-    int PLAYER_VEL = 10;
-
-    if (command->command_event.type == SDL_KEYDOWN && command->command_event.key.repeat == 0) {
-
-        //Adjust the velocity
-        switch (command->command_event.key.keysym.sym) {
-            case SDLK_UP:
-                (*view).positionY -= PLAYER_VEL / 4;
-                break;
-            case SDLK_DOWN:
-                (*view).positionY += PLAYER_VEL / 4;
-                break;
-            case SDLK_LEFT:
-                (*view).positionX -= PLAYER_VEL / 3;
-                break;
-            case SDLK_RIGHT:
-                (*view).positionX += PLAYER_VEL / 5;
-                break;
-        }
-
-    }
-        //If a key was released
-    else if (command->command_event.type == SDL_KEYUP && command->command_event.key.repeat == 0) {
-
-        //Adjust the velocity
-        switch (command->command_event.key.keysym.sym) {
-            case SDLK_UP:
-                (*view).positionY += PLAYER_VEL / 4;
-                break;
-            case SDLK_DOWN:
-                (*view).positionY -= PLAYER_VEL / 4;
-                break;
-            case SDLK_LEFT:
-                (*view).positionX += PLAYER_VEL / 3;
-                break;
-            case SDLK_RIGHT:
-                (*view).positionX -= PLAYER_VEL / 5;
-                break;
-        }
+    switch ( command->command_event )
+    {
+        case 1:
+            (*view).positionY += 1;
+            break;
+        case -1:
+            (*view).positionY -= 1;
+            break;
+        case 2:
+            (*view).positionX += 1;
+            break;
+        case -2:
+            (*view).positionX -= 1;
+            break;
     }
 }
 

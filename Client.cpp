@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include "Client.h"
 
-void Client::connectToServer(char *ip, char *puerto) {
+int Client::connectToServer(char *ip, char *puerto) {
 
     printf("Arguments: 1) ip: %s ,2) port: %s \n", ip, puerto);
 
@@ -19,6 +19,7 @@ void Client::connectToServer(char *ip, char *puerto) {
     client_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (client_socket == -1) {
         perror("Could not create socket");
+        return -1;
     }
     printf("Socket created\n");
 
@@ -40,17 +41,24 @@ void Client::connectToServer(char *ip, char *puerto) {
     if (connect(client_socket, (struct sockaddr *) &server, sizeof(server)) < 0) {
         perror("connect failed. Error");
         isConnected = false;
+        return -1;
     } else {
         printf("Connected\n\n");
         isConnected = true;
-        chatToServer();
+
+        thread hiloReciver(&Client::chatToServer,this) ;
+        hiloReciver.detach();
+
+        thread hiloSender(&Client::sendDataToServer,this) ;
+        hiloSender.join();
+        // ToDO: Cuando haya juego cambiar a detach
     }
+    return 0;
 }
-void Client::chatToServer(){
 
-    // data to send
+void Client::sendDataToServer(){
+
     SDL_Init (SDL_INIT_VIDEO);
-
     SDL_Event event;
     event.type = SDL_KEYDOWN;
     event.key.keysym.sym = SDLK_UP;
@@ -58,20 +66,23 @@ void Client::chatToServer(){
     SDL_PushEvent(&event);
 
     //keep communicating with server
-    while(isConnected)
-    {
+    while(isConnected) {
         // Set data to send
-
-        while ( SDL_PollEvent( &event ) ){
-            command.command_event = event;
+        while (SDL_PollEvent(&event)) {
+            command.command_event = processEvent(event);
         }
 
         // Send data (command)
-        if (sendData(&client_socket, &command) < 0 && isConnected){
+        if (sendData(&client_socket, &command) < 0 && isConnected) {
             perror("Send Data Error");
             isConnected = false;
         }
+    }
+    closeClient();
+}
 
+void Client::chatToServer(){
+    while(isConnected){
         // Receive data (view)
         if (receiveData(&client_socket, &view) < 0 && isConnected){
             perror("Receive Data Error");
@@ -131,5 +142,48 @@ int Client::receiveData(int *client_socket, struct View *client_view) {
 void Client::closeClient() {
     close(client_socket);
     printf("Socket number %d closed\n", client_socket);
+}
+
+int Client::processEvent(SDL_Event event) {
+    int PLAYER_VEL = 1;
+
+    if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+        //Adjust the velocity
+        switch (event.key.keysym.sym) {
+            case SDLK_UP:
+                return -1;
+                break;
+            case SDLK_DOWN:
+                 return +1;
+                break;
+            case SDLK_LEFT:
+                 return -2;
+                break;
+            case SDLK_RIGHT:
+                 return +2;
+                break;
+        }
+
+    }
+        //If a key was released
+    else if (event.type == SDL_KEYUP && event.key.repeat == 0) {
+
+        //Adjust the velocity
+        switch (event.key.keysym.sym) {
+            case SDLK_UP:
+                 return +1;
+                break;
+            case SDLK_DOWN:
+                 return -1;
+                break;
+            case SDLK_LEFT:
+                 return +2;
+                break;
+            case SDLK_RIGHT:
+                 return -2;
+                break;
+        }
+    }
+    return 0;
 }
 

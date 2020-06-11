@@ -14,7 +14,9 @@ int main( int argc, char* argv[] ) {
 
     if( argc == 4 && strcmp(argv[1],"CLIENT") == 0 ) {
 
-        cliente.connectToServer(argv[2], argv[3]);
+        if( cliente.connectToServer(argv[2], argv[3]) == 0){
+            printf("Play the game");
+        }
 
     }
 

@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 
 struct Command {
-    SDL_Event command_event ;
+    int command_event ;
 };
 
 struct View {
