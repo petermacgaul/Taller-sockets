@@ -5,7 +5,7 @@
 #include <vector>
 #include <thread>
 
-#include "ColaMultiHilo.h"
+#include "QueueMultithread.h"
 #include "CommunicateData.h"
 #include <map>
 
@@ -26,14 +26,12 @@ typedef struct Cliente {
 
 class Server {
     int serverSocket;
-    bool server_online;
+    bool serverOnline;
 
     map<int,client_info> clients;
-    int clientes_esperados;
+    int expectedClients;
 
-    ColaMultiHilo<QueueCommand> colaDeEventos;
-
-
+    QueueMultithread<QueueCommand> eventQueue;
 
     void initializeData(struct View* client_view);
 
@@ -41,7 +39,7 @@ class Server {
 
     int sendData(client_info *client);
 
-    void desencolar();
+    void popCommand();
 
     int acceptClient();
 
@@ -56,8 +54,8 @@ class Server {
     bool playersAreConnected();
 
 public:
-    int initServer(char *argv);
 
+    int initServer(char *argv);
 
 };
 

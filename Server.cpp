@@ -71,14 +71,14 @@ int Server::initServer(char *argv) {
      backlog-> The backlog argument defines the maximum length to which the queue of pending connections for sockfd may grow.
      listen() marks the socket referred to by sockfd as a passive socket, that is, as a socket that will be used to accept incoming connection requests using accept();
     */
-    clientes_esperados = 2 ; //ToDo: cambiar se lee del config
+    expectedClients = 2 ; //ToDo: cambiar se lee del config
 
-    if (listen(serverSocket , clientes_esperados) < 0)
+    if (listen(serverSocket , expectedClients) < 0)
     {
         perror("Listen failed. Error");
         return -1;
     }
-    server_online = true;
+    serverOnline = true;
 
     return acceptClient();
 }
@@ -103,7 +103,7 @@ int Server::acceptClient(){
 
     int clientes_activos = howManyPlayersAreConnected();
 
-    while(server_online && clientes_activos < clientes_esperados){
+    while(serverOnline && clientes_activos < expectedClients){
 
         int clientSocket = accept(serverSocket, (struct sockaddr *) &client_addr, (socklen_t*) &clientAddrlen);
 
@@ -126,7 +126,7 @@ int Server::acceptClient(){
         initializeData(&client->view);
 
         if(clients.size() == 1){
-            thread hiloDesencolador(&Server::desencolar, this );
+            thread hiloDesencolador(&Server::popCommand, this );
             hiloDesencolador.detach();
         }
 
@@ -134,8 +134,8 @@ int Server::acceptClient(){
         hiloChatter.detach();
     }
 
-    while (server_online){
-        if (clientes_activos == clientes_esperados){
+    while (serverOnline){
+        if (clientes_activos == expectedClients){
             clientes_activos = howManyPlayersAreConnected();
             usleep(1000);
         }
@@ -246,7 +246,7 @@ void Server::closeServer() {
             printf("Client socket number %d closed\n", it->second.clientSocket);
         }
     }
-    server_online = false;
+    serverOnline = false;
 
     printf("Server socket number %d closed\n",serverSocket);
     printf("Closing server \n");
@@ -271,20 +271,20 @@ void Server::chatWhitClients(int client_socket) {
     queueCommand.client_socket = client_socket;
     client_info* client = &clients[client_socket];
 
-    while( client->isConnected && server_online ){
+    while(client->isConnected && serverOnline ){
         receiveData(client);
 
         queueCommand.command = client->command;
 
-        colaDeEventos.push(queueCommand);
+        eventQueue.push(queueCommand);
     }
 }
 
-void Server::desencolar(){
+void Server::popCommand(){
     QueueCommand command;
     while ( playersAreConnected() ) {
-        while (!colaDeEventos.isEmpty()) {
-            command = colaDeEventos.pop();
+        while (!eventQueue.isEmpty()) {
+            command = eventQueue.pop();
 
             processData(&command.command,&clients[command.client_socket].view);
 

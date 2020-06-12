@@ -28,8 +28,6 @@ public:
 
     void chatToServer();
 
-    void recibeDataFromServer();
-
     void sendDataToServer();
 
     int processEvent(SDL_Event event);

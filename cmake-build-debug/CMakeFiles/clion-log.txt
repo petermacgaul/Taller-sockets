@@ -1,4 +1,4 @@
-/snap/clion/114/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/home/peter/CLionProjects/Taller sockets"
+/snap/clion/114/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/peter/Downloads/Taller-sockets
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/peter/CLionProjects/Taller sockets/cmake-build-debug
+-- Build files have been written to: /home/peter/Downloads/Taller-sockets/cmake-build-debug
