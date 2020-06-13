@@ -50,26 +50,26 @@ int Client::connectToServer(char *ip, char *puerto) {
         hiloReciver.detach();
 
         thread hiloSender(&Client::sendDataToServer,this) ;
-        hiloSender.join();
-        // ToDO: Cuando haya juego cambiar a detach
+        hiloSender.detach();
+
+        game = new GameRunner();
+        game->runGame(&q);
     }
     return 0;
 }
 
 void Client::sendDataToServer(){
 
-    SDL_Init (SDL_INIT_VIDEO);
-    SDL_Event event;
-    event.type = SDL_KEYDOWN;
-    event.key.keysym.sym = SDLK_UP;
-    event.key.repeat = 0;
-    SDL_PushEvent(&event);
-
     //keep communicating with server
     while(isConnected) {
-        // Set data to send
-        while (SDL_PollEvent(&event)) {
-            command.command_event = processEvent(event);
+        int result = 0;
+
+        if (!q.empty()){
+            SDL_Event event = q.front();
+            result = processEvent( event );
+            q.pop();
+            command.command_event = result;
+            printf("Commando mandado : %d ",result);
         }
 
         // Send data (command)
@@ -88,10 +88,7 @@ void Client::chatToServer(){
             perror("Receive Data Error");
             isConnected = false;
         }
-        else {
-            printf("Incomming data: pos(X,Y) = (%d,%d)\n\n", view.positionX, view.positionY);
-            printf("Incomming data: vel(X,Y) = (%d,%d)\n\n", view.velocityX, view.velocityY);
-        }
+        game->sendView(view.positionX,view.positionY);
     }
     closeClient();
 }
@@ -145,44 +142,21 @@ void Client::closeClient() {
 }
 
 int Client::processEvent(SDL_Event event) {
-    int PLAYER_VEL = 1;
-
-    if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
-        //Adjust the velocity
-        switch (event.key.keysym.sym) {
-            case SDLK_UP:
-                return -1;
-                break;
-            case SDLK_DOWN:
-                 return +1;
-                break;
-            case SDLK_LEFT:
-                 return -2;
-                break;
-            case SDLK_RIGHT:
-                 return +2;
-                break;
-        }
-
-    }
-        //If a key was released
-    else if (event.type == SDL_KEYUP && event.key.repeat == 0) {
-
-        //Adjust the velocity
-        switch (event.key.keysym.sym) {
-            case SDLK_UP:
-                 return +1;
-                break;
-            case SDLK_DOWN:
-                 return -1;
-                break;
-            case SDLK_LEFT:
-                 return +2;
-                break;
-            case SDLK_RIGHT:
-                 return -2;
-                break;
-        }
+    switch (event.type) {
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym) {
+                case SDLK_UP:
+                    return 1;
+                case SDLK_DOWN:
+                    return -1;
+                case SDLK_LEFT:
+                    return 2;
+                case SDLK_RIGHT:
+                    return -2;
+                default:
+                    break;
+            }
+            break;
     }
     return 0;
 }

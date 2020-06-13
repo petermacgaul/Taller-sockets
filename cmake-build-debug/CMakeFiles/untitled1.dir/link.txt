@@ -1,1 +1,1 @@
-/usr/bin/c++   -std=c++17 -g   CMakeFiles/untitled1.dir/main.cpp.o CMakeFiles/untitled1.dir/Server.cpp.o CMakeFiles/untitled1.dir/Client.cpp.o  -o ../bin/untitled1  /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/lib/x86_64-linux-gnu/libSDL2.so -lpthread 
+/usr/bin/c++   -std=c++17 -g   CMakeFiles/untitled1.dir/main.cpp.o CMakeFiles/untitled1.dir/Server.cpp.o CMakeFiles/untitled1.dir/Client.cpp.o CMakeFiles/untitled1.dir/GameRunner.cpp.o  -o ../bin/untitled1  /usr/lib/x86_64-linux-gnu/libSDL2main.a /usr/lib/x86_64-linux-gnu/libSDL2.so -lpthread 

@@ -8,38 +8,38 @@
 		<Option virtualFolders="CMake Files\;CMake Files\cmake\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/peter/Downloads/Taller-sockets/cmake-build-debug"/>
+				<Option working_dir="/home/peter/CLionProjects/Taller sockets/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/peter/Downloads/Taller-sockets/cmake-build-debug"/>
+				<Option working_dir="/home/peter/CLionProjects/Taller sockets/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/peter/Downloads/Taller-sockets/cmake-build-debug"/>
+				<Option working_dir="/home/peter/CLionProjects/Taller sockets/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="untitled1">
-				<Option output="/home/peter/Downloads/Taller-sockets/bin/untitled1" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/peter/Downloads/Taller-sockets/bin"/>
+				<Option output="/home/peter/CLionProjects/Taller sockets/bin/untitled1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/peter/CLionProjects/Taller sockets/bin"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -53,15 +53,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 untitled1"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 untitled1"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="untitled1/fast">
-				<Option output="/home/peter/Downloads/Taller-sockets/bin/untitled1" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/peter/Downloads/Taller-sockets/bin"/>
+				<Option output="/home/peter/CLionProjects/Taller sockets/bin/untitled1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/peter/CLionProjects/Taller sockets/bin"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -75,38 +75,44 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 untitled1/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/Downloads/Taller-sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 untitled1/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/peter/CLionProjects/Taller\ sockets/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/peter/Downloads/Taller-sockets/Client.cpp">
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/Client.cpp">
 			<Option target="untitled1"/>
 		</Unit>
-		<Unit filename="/home/peter/Downloads/Taller-sockets/Client.h">
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/Client.h">
 			<Option target="untitled1"/>
 		</Unit>
-		<Unit filename="/home/peter/Downloads/Taller-sockets/CommunicateData.h">
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/CommunicateData.h">
 			<Option target="untitled1"/>
 		</Unit>
-		<Unit filename="/home/peter/Downloads/Taller-sockets/QueueMultithread.h">
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/GameRunner.cpp">
 			<Option target="untitled1"/>
 		</Unit>
-		<Unit filename="/home/peter/Downloads/Taller-sockets/Server.cpp">
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/GameRunner.h">
 			<Option target="untitled1"/>
 		</Unit>
-		<Unit filename="/home/peter/Downloads/Taller-sockets/Server.h">
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/QueueMultithread.h">
 			<Option target="untitled1"/>
 		</Unit>
-		<Unit filename="/home/peter/Downloads/Taller-sockets/main.cpp">
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/Server.cpp">
 			<Option target="untitled1"/>
 		</Unit>
-		<Unit filename="/home/peter/Downloads/Taller-sockets/CMakeLists.txt">
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/Server.h">
+			<Option target="untitled1"/>
+		</Unit>
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/main.cpp">
+			<Option target="untitled1"/>
+		</Unit>
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="/home/peter/Downloads/Taller-sockets/cmake/FindSDL2.cmake">
+		<Unit filename="/home/peter/CLionProjects/Taller sockets/cmake/FindSDL2.cmake">
 			<Option virtualFolder="CMake Files\cmake\"/>
 		</Unit>
 	</Project>

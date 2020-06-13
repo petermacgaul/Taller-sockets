@@ -48,10 +48,10 @@ RM = /snap/clion/114/bin/cmake/linux/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/peter/Downloads/Taller-sockets
+CMAKE_SOURCE_DIR = "/home/peter/CLionProjects/Taller sockets"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/peter/Downloads/Taller-sockets/cmake-build-debug
+CMAKE_BINARY_DIR = "/home/peter/CLionProjects/Taller sockets/cmake-build-debug"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/peter/Downloads/Taller-sockets/cmake-build-debug/CMakeFiles /home/peter/Downloads/Taller-sockets/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/peter/CLionProjects/Taller sockets/cmake-build-debug/CMakeFiles" "/home/peter/CLionProjects/Taller sockets/cmake-build-debug/CMakeFiles/progress.marks"
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/peter/Downloads/Taller-sockets/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/peter/CLionProjects/Taller sockets/cmake-build-debug/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -150,6 +150,33 @@ Client.cpp.s:
 	$(MAKE) -f CMakeFiles/untitled1.dir/build.make CMakeFiles/untitled1.dir/Client.cpp.s
 .PHONY : Client.cpp.s
 
+GameRunner.o: GameRunner.cpp.o
+
+.PHONY : GameRunner.o
+
+# target to build an object file
+GameRunner.cpp.o:
+	$(MAKE) -f CMakeFiles/untitled1.dir/build.make CMakeFiles/untitled1.dir/GameRunner.cpp.o
+.PHONY : GameRunner.cpp.o
+
+GameRunner.i: GameRunner.cpp.i
+
+.PHONY : GameRunner.i
+
+# target to preprocess a source file
+GameRunner.cpp.i:
+	$(MAKE) -f CMakeFiles/untitled1.dir/build.make CMakeFiles/untitled1.dir/GameRunner.cpp.i
+.PHONY : GameRunner.cpp.i
+
+GameRunner.s: GameRunner.cpp.s
+
+.PHONY : GameRunner.s
+
+# target to generate assembly for a file
+GameRunner.cpp.s:
+	$(MAKE) -f CMakeFiles/untitled1.dir/build.make CMakeFiles/untitled1.dir/GameRunner.cpp.s
+.PHONY : GameRunner.cpp.s
+
 Server.o: Server.cpp.o
 
 .PHONY : Server.o
@@ -216,6 +243,9 @@ help:
 	@echo "... Client.o"
 	@echo "... Client.i"
 	@echo "... Client.s"
+	@echo "... GameRunner.o"
+	@echo "... GameRunner.i"
+	@echo "... GameRunner.s"
 	@echo "... Server.o"
 	@echo "... Server.i"
 	@echo "... Server.s"

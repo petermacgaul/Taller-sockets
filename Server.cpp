@@ -90,7 +90,7 @@ int Server::acceptClient(){
     int clientAddrlen;
 
     struct timeval tv;
-    tv.tv_sec = 10;
+    tv.tv_sec = 5;
     tv.tv_usec = 0;
 
     /*
@@ -114,6 +114,7 @@ int Server::acceptClient(){
         }
 
         setsockopt(clientSocket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+        setsockopt(clientSocket, SOL_SOCKET, SO_SNDTIMEO, (const char*)&tv, sizeof tv);
 
         printf("\nConnection accepted\n");
 

@@ -2,10 +2,18 @@
 #define TALLER_CLIENT_H
 
 #include "CommunicateData.h"
+#include "GameRunner.h"
+#include <queue>
 #include <thread>
+
 using namespace std;
 
 class Client {
+
+    queue<SDL_Event> q;
+
+    GameRunner* game;
+
     int client_socket;
 
     struct sockaddr_in server;
