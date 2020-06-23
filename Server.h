@@ -12,16 +12,15 @@
 using namespace std;
 
 struct QueueCommand{
-    Command command;
     int client_socket;
+    int process_event;
+    char* buffer_command;
 };
 
 typedef struct Cliente {
     bool isConnected;
     int clientSocket;
     int clientAddrlen;
-    View view;
-    Command command;
 } client_info;
 
 class Server {
@@ -30,12 +29,13 @@ class Server {
 
     map<int,client_info> clients;
     int expectedClients;
+    char buffer[1024];
 
     QueueMultithread<QueueCommand> eventQueue;
 
-    void initializeData(struct View* client_view);
+    void initializeData();
 
-    void processData(Command* command, View* view);
+    char * processData(char* comando);
 
     int sendData(client_info *client);
 
@@ -51,12 +51,11 @@ class Server {
 
     void closeServer();
 
-    bool playersAreConnected();
-
 public:
 
     int initServer(char *argv);
 
+    char buffer_enviador[1024];
 };
 
 

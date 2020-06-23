@@ -27,37 +27,26 @@ void GameRunner::runGame(queue<SDL_Event> * q) {
 
     /* Loop until an SDL_QUIT event is found */
     while( !quit ) {
-
         /* Poll for events */
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_QUIT:
                     quit = 1;
                     break;
-                default:
+            }
+            switch (event.key.type){
+                case SDL_KEYDOWN:
+                    q->push(event);
+                    break;
+                case SDL_KEYUP:
                     q->push(event);
                     break;
             }
         }
-        printf("Posicion actual (x,y) = (%d,%d) \n", x, y);
     }
     /* Clean up */
     SDL_Quit();
     exit( 0 );
-}
-
-void GameRunner::PrintKeyInfo(SDL_KeyboardEvent *key) {
-    /* Is it a release or a press? */
-    if( key->type == SDL_KEYUP )
-        printf( "Release:- " );
-    else
-        printf( "Press:- " );
-
-    /* Print the hardware scancode first */
-    printf( "Scancode: 0x%02X", key->keysym.scancode );
-    /* Print the name of the key */
-    printf( ", Name: %s", SDL_GetKeyName( key->keysym.sym ) );
-
 }
 
 void GameRunner::sendView(int x, int y) {
@@ -65,4 +54,8 @@ void GameRunner::sendView(int x, int y) {
     this->x = x;
     this->y = y;
 
+}
+
+void GameRunner::close(){
+    SDL_Quit();
 }

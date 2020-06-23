@@ -18,11 +18,11 @@ class Client {
 
     struct sockaddr_in server;
 
-    struct Command command;
-
-    struct View view;
-
     bool isConnected;
+
+    char buffer_enviado[1024];
+
+    char buffer_receptor[1024];
 
 public:
 
@@ -30,15 +30,16 @@ public:
 
     int connectToServer(char *ip, char *port);
 
-    int receiveData(int* client_socket, struct View* client_view);
+    int receiveData();
 
-    int sendData(int* client_socket, struct Command* client_command);
+    int sendData();
 
     void chatToServer();
 
     void sendDataToServer();
 
-    int processEvent(SDL_Event event);
+    void endGame();
+
 };
 
 

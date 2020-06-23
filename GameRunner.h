@@ -25,6 +25,8 @@ public:
 
     int x;
     int y;
+
+    void close();
 };
 
 

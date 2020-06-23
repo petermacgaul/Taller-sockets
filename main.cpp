@@ -17,7 +17,7 @@ int main( int argc, char* argv[] ) {
         Client cliente;
 
         if( cliente.connectToServer(argv[2], argv[3]) == 0){
-            printf("Play the game");
+            printf("Juego finalizado con exito");
         }
     }
 
